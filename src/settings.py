@@ -18,7 +18,7 @@ class SettingManager(object):
         pass
     def restore_default_setting(self):
         self.set_image_save_dir(os.path.join(self._my_dir,'..','default_image_save_dir'))
-        self.set_seeninfo_save_dir(os.path.join(self._my_dir,'..','default_seeninfo_save_dir'))
+        self.set_detection_save_dir(os.path.join(self._my_dir, '..', 'default_seeninfo_save_dir'))
         self.set_taking_image_plans([])
     def write_setting(self):
         pass
@@ -28,10 +28,10 @@ class SettingManager(object):
     def set_image_save_dir(self,d):
         self._setting['imageSaveDir']=d
 
-    def get_seeninfo_save_dir(self):
-        return self._setting['seeninfoSaveDir']
-    def set_seeninfo_save_dir(self,d):
-        self._setting['seeninfoSaveDir']=d
+    def get_detection_save_dir(self):
+        return self._setting['detectionSaveDir']
+    def set_detection_save_dir(self, d):
+        self._setting['sdetectionSaveDir']=d
 
     def get_taking_image_plans(self):
         return self._setting['takingImagePlans']
