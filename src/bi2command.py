@@ -83,10 +83,10 @@ class BI2Command(cmd.Cmd):
         '''検出情報の保存先ディレクトリを指定する。'''
         self._setting_manager.set_detection_save_dir(arg)
 
-    def do_showexittme(self, arg):
+    def do_showexittime(self, arg):
         '''終了時刻を表示する。'''
         h, m = self._setting_manager.get_exit_time()
-        print('終了時刻は{:02d}時{:0s}分です。'.format(h, m))
+        print('終了時刻は{:02d}時{:02d}分です。'.format(h, m))
 
     def do_exittime(self, arg):
         '''終了時刻を argに4桁で示す。
