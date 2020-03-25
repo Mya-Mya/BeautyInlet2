@@ -1,0 +1,16 @@
+{
+ "exitTime": {
+  "h": 0,
+  "m": 0
+ },
+ "imageSaveDir": "/home/yuya/repositories/BeautyInlet2/src/../default_image_save_dir",
+ "detectionSaveDir": "/home/yuya/repositories/BeautyInlet2/src/../default_seeninfo_save_dir",
+ "takingPlans": [
+  {
+   "h": 5,
+   "m": 0,
+   "saveImage": true,
+   "saveDetection": true
+  }
+ ]
+}
