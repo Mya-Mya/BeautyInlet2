@@ -1,17 +1,13 @@
 import cmd
-import settings
+import setting_manager
 
 
-class BeautyInlet2Command(cmd.Cmd):
-    intro = '''
-    BeautyInlet2
-    〜 ヌシを求めコーヒーを捨てる 〜
-    Copyright (C) 2680 Mya-Mya. All rights reserved.'''
+class BI2Command(cmd.Cmd):
     prompt = 'BI2cmd > '
-    doc_header = intro
+    doc_header = 'Help on BeautyInlet2 command'
     ruler = '-'
 
-    def __init__(self, setting_manager: settings.SettingManager, exit_func):
+    def __init__(self, setting_manager: setting_manager.SettingManager, exit_func):
         super().__init__()
         self._setting_manager = setting_manager
         self._exit_func=exit_func
