@@ -11,9 +11,10 @@ class BeautyInlet2Command(cmd.Cmd):
     doc_header = intro
     ruler = '-'
 
-    def __init__(self, setting_manager: settings.SettingManager):
+    def __init__(self, setting_manager: settings.SettingManager, exit_func):
         super().__init__()
         self._setting_manager = setting_manager
+        self._exit_func=exit_func
 
     def default(self, line):
         print('不明なコマンド')
@@ -90,10 +91,4 @@ class BeautyInlet2Command(cmd.Cmd):
 
     def do_exit(self,arg):
         '''BeautyInlet2を終了する。'''
-        self._setting_manager.save_setting()
-        exit(0)
-
-
-if __name__ == '__main__':
-    setting_manager = settings.SettingManager()
-    BeautyInlet2Command(setting_manager).cmdloop()
+        self._exit_func()
