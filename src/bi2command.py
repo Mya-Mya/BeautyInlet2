@@ -1,16 +1,22 @@
 import cmd
 import threading
 import setting_manager
+import bi2info
+import image_taker
 
 
 class BI2Command(cmd.Cmd):
     prompt = 'BI2cmd : '
-    doc_header = 'Help on BeautyInlet2 command'
+    doc_header = bi2info.DESCRIPTION
     ruler = '-'
 
-    def __init__(self, setting_manager: setting_manager.SettingManager, end_event: threading.Event):
+    def __init__(self,
+                 setting_manager: setting_manager.SettingManager,
+                 image_taker: image_taker.ImageTaker,
+                 end_event: threading.Event):
         super().__init__()
         self._setting_manager = setting_manager
+        self._image_taker = image_taker
         self._end_event = end_event
 
     def default(self, line):
@@ -65,6 +71,10 @@ class BI2Command(cmd.Cmd):
 
     def do_take(self, arg):
         '''今すぐ撮影し識別する。argには画像を保存する場合はi、識別を保存する場合はdを追加する。'''
+        self._image_taker.run(
+            save_image='i' in arg,
+            detect_image='d' in arg
+        )
 
     def do_log(self, arg):
         '''記録された識別結果の履歴を表示する。'''
