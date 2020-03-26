@@ -3,20 +3,21 @@ import os
 import io
 from operator import itemgetter
 import bi2info
-
+import platform
 
 class SettingManager(object):
     '''BeautyInlet2の設定ファイルを読み書きする。'''
 
     def __init__(self):
         self._my_dir = os.path.dirname(__file__)
-        self._setting_fname = os.path.join(self._my_dir, '..', 'setting-{}.json'.format(bi2info.VERSION))
+        setting_fname='setting-{}-{}.json'.format(bi2info.VERSION,platform.node())
+        self._setting_full_fname = os.path.join(self._my_dir, '..', setting_fname)
         self.restore_default_setting()
         try:
-            with io.open(self._setting_fname)as f:
+            with io.open(self._setting_full_fname)as f:
                 self._setting = json.load(f)
         except:
-            print('SettingManager : {}が見つからなかったので新規作成するつもり。'.format(self._setting_fname))
+            print('SettingManager : {}が見つからなかったので新規作成するつもり。'.format(self._setting_full_fname))
             pass
 
     def restore_default_setting(self):
@@ -86,5 +87,5 @@ class SettingManager(object):
     def save_setting(self):
         '''設定を書き込む。'''
         self.tidy_taking_plans()
-        with io.open(self._setting_fname, 'w') as f:
+        with io.open(self._setting_full_fname, 'w') as f:
             json.dump(self._setting, f, indent=1)
