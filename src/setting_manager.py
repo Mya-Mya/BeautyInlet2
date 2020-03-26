@@ -4,6 +4,7 @@ import io
 from operator import itemgetter
 import bi2info
 
+
 class SettingManager(object):
     '''BeautyInlet2の設定ファイルを読み書きする。'''
 
@@ -21,15 +22,15 @@ class SettingManager(object):
     def restore_default_setting(self):
         '''設定を初期状態に復元する。'''
         self._setting = {}
-        self.set_exit_time(0,0)
+        self.set_exit_time(0, 0)
         self.set_image_save_dir(os.path.join(self._my_dir, '..', 'default_image_save_dir'))
         self.set_detection_save_dir(os.path.join(self._my_dir, '..', 'default_seeninfo_save_dir'))
         self.set_taking_plans([])
 
-    def get_exit_time(self)->tuple:
+    def get_exit_time(self) -> tuple:
         '''終了時刻を返す。'''
-        time=self._setting['exitTime']
-        return(time['h'],time['m'])
+        time = self._setting['exitTime']
+        return (time['h'], time['m'])
 
     def get_detection_save_dir(self) -> str:
         '''検出情報の保存先ディレクトリを返す。'''
@@ -43,9 +44,9 @@ class SettingManager(object):
         '''撮影計画を返す。'''
         return self._setting['takingPlans']
 
-    def set_exit_time(self,h:int,m:int):
+    def set_exit_time(self, h: int, m: int):
         '''終了時刻を指定する。'''
-        self._setting['exitTime']={'h':h,'m':m}
+        self._setting['exitTime'] = {'h': h, 'm': m}
 
     def set_detection_save_dir(self, d: str):
         '''検出情報の保存先ディレクトリを指定する。'''
@@ -54,6 +55,7 @@ class SettingManager(object):
     def set_image_save_dir(self, d: str):
         '''撮影した画像の保存先ディレクトリを指定する。'''
         self._setting['imageSaveDir'] = d
+
     def set_taking_plans(self, p: list):
         self._setting['takingPlans'] = p
 

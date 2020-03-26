@@ -1,16 +1,17 @@
 import cmd
+import threading
 import setting_manager
 
 
 class BI2Command(cmd.Cmd):
-    prompt = 'BI2cmd > '
+    prompt = 'BI2cmd : '
     doc_header = 'Help on BeautyInlet2 command'
     ruler = '-'
 
-    def __init__(self, setting_manager: setting_manager.SettingManager, exit_func):
+    def __init__(self, setting_manager: setting_manager.SettingManager, end_event: threading.Event):
         super().__init__()
         self._setting_manager = setting_manager
-        self._exit_func = exit_func
+        self._end_event = end_event
 
     def default(self, line):
         print('不明なコマンド')
@@ -93,9 +94,10 @@ class BI2Command(cmd.Cmd):
         2:0に終了する場合は arg="0200"'''
         if len(arg) is not 4:
             print('arg には4文字入れて')
+            return
         h, m = self.to_hour_and_minuite(arg)
         self._setting_manager.set_exit_time(h, m)
 
     def do_exit(self, arg):
         '''BeautyInlet2を終了する。'''
-        self._exit_func()
+        self._end_event.set()
