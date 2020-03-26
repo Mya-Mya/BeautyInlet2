@@ -1,5 +1,4 @@
 import cv2
-import numpy as np
 import image_saver
 import image_detector
 
@@ -18,6 +17,7 @@ class ImageTaker(object):
             return
         ret, image = video.read()
         video.release()
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
         if save_image:
             self._image_saver.save_image(image)
