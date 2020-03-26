@@ -24,7 +24,7 @@ class SettingManager(object):
         self._setting = {}
         self.set_exit_time(0, 0)
         self.set_image_save_dir(os.path.join(self._my_dir, '..', 'default_image_save_dir'))
-        self.set_detection_save_dir(os.path.join(self._my_dir, '..', 'default_seeninfo_save_dir'))
+        self.set_detection_save_dir(os.path.join(self._my_dir, '..', 'default_detection_save_dir'))
         self.set_taking_plans([])
 
     def get_exit_time(self) -> tuple:
