@@ -13,4 +13,6 @@ class ImageSaver(object):
         image_pil = Image.fromarray(image)
         fname = time.strftime('%Y_%m_%d_%H_%M_%S.jpg')
         dir = self._setting_manager.get_image_save_dir()
-        image_pil.save(os.path.join(dir, fname))
+        fp = os.path.join(dir, fname)
+        image_pil.save(fp)
+        print('ImageSaver.save_image : {}を保存した'.format(fp))
