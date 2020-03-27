@@ -1,6 +1,7 @@
 import cv2
 import image_saver
 import image_detector
+import time
 
 
 class ImageTaker(object):
@@ -10,7 +11,10 @@ class ImageTaker(object):
         self._image_saver = image_saver
         self._image_detector = image_detector
 
-    def run(self, save_image: bool, detect_image: bool):
+    def run(self,
+            localtime: time.struct_time,
+            save_image: bool,
+            save_detection: bool):
         video = cv2.VideoCapture(0)
         if not video.isOpened():
             print('image_taker.take_image : カメラを開けなかった。')
@@ -20,6 +24,5 @@ class ImageTaker(object):
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
         if save_image:
-            self._image_saver.save_image(image)
-        if detect_image:
-            self._image_detector.save_detection(image)
+            self._image_saver.save_image(localtime=localtime, image=image)
+        self._image_detector.detect(localtime=localtime, image=image, save_detection=save_detection)

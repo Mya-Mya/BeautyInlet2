@@ -73,7 +73,7 @@ class BI2Command(cmd.Cmd):
         '''今すぐ撮影し識別する。argには画像を保存する場合はi、識別を保存する場合はdを追加する。'''
         self._image_taker.run(
             save_image='i' in arg,
-            detect_image='d' in arg
+            save_detection='d' in arg
         )
 
     def do_log(self, arg):

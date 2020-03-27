@@ -32,4 +32,8 @@ class TimeKeeper(object):
             for plan in self._setting_manager.get_taking_plans():
                 if plan['h'] is tm_hour and plan['m'] is tm_min:
                     print('TimeKeeper.run : お仕事の時間です。')
-                    self._image_taker.run(plan['saveImage'], plan['saveDetection'])
+                    self._image_taker.run(
+                        localtime=localtime,
+                        save_image=plan['saveImage'],
+                        save_detection=plan['saveDetection']
+                    )

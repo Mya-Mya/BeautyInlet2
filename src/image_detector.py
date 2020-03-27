@@ -2,6 +2,7 @@ import setting_manager
 import numpy as np
 import threading
 import os
+import time
 
 
 class ImageDetector(object):
@@ -18,7 +19,7 @@ class ImageDetector(object):
         self._model = tf.keras.models.load_model(os.path.join(my_dir, "..", "modelF_for_1.4-00300.h5"))
         print('ImageDetector : TensorFlow及び検出モデルの読み込み完了。')
 
-    def save_detection(self, image: np.ndarray):
+    def detect(self,localtime:time.struct_time, image: np.ndarray, save_detection: bool):
         if self._loader.is_alive():
             print('ImageDetector.save_detection : 未だTensorFlow及び検出モデルの読み込み中。お待ちを。')
             self._loader.join()

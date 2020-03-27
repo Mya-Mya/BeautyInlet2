@@ -1,7 +1,7 @@
 {
  "exitTime": {
-  "h": 17,
-  "m": 25
+  "h": 12,
+  "m": 10
  },
  "imageSaveDir": "/home/yuya/repositories/BeautyInlet2/src/../default_image_save_dir",
  "detectionSaveDir": "/home/yuya/repositories/BeautyInlet2/src/../default_seeninfo_save_dir",
@@ -35,6 +35,48 @@
    "m": 0,
    "saveImage": true,
    "saveDetection": true
+  },
+  {
+   "h": 11,
+   "m": 0,
+   "saveImage": true,
+   "saveDetection": false
+  },
+  {
+   "h": 11,
+   "m": 10,
+   "saveImage": true,
+   "saveDetection": false
+  },
+  {
+   "h": 11,
+   "m": 20,
+   "saveImage": true,
+   "saveDetection": false
+  },
+  {
+   "h": 11,
+   "m": 30,
+   "saveImage": true,
+   "saveDetection": false
+  },
+  {
+   "h": 11,
+   "m": 40,
+   "saveImage": true,
+   "saveDetection": false
+  },
+  {
+   "h": 11,
+   "m": 50,
+   "saveImage": true,
+   "saveDetection": false
+  },
+  {
+   "h": 12,
+   "m": 0,
+   "saveImage": true,
+   "saveDetection": false
   }
  ]
 }

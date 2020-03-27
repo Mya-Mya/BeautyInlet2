@@ -9,10 +9,17 @@ class ImageSaver(object):
     def __init__(self, setting_manager: setting_manager.SettingManager):
         self._setting_manager = setting_manager
 
-    def save_image(self, image: np.ndarray):
+    def save_image(self,localtime:time.struct_time, image: np.ndarray):
         image_pil = Image.fromarray(image)
-        fname = time.strftime('%Y_%m_%d_%H_%M_%S.jpg')
         dir = self._setting_manager.get_image_save_dir()
+        fname='{}_{}_{}_{}_{}_{}.jpg'.format(
+            localtime.tm_year,
+            localtime.tm_mon,
+            localtime.tm_mday,
+            localtime.tm_hour,
+            localtime.tm_min,
+            localtime.tm_sec
+        )
         fp = os.path.join(dir, fname)
         image_pil.save(fp)
         print('ImageSaver.save_image : {}を保存した'.format(fp))
