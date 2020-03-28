@@ -1,5 +1,7 @@
 import cmd
 import threading
+import time
+
 import setting_manager
 import bi2info
 import image_taker
@@ -72,12 +74,10 @@ class BI2Command(cmd.Cmd):
     def do_take(self, arg):
         '''今すぐ撮影し識別する。argには画像を保存する場合はi、識別を保存する場合はdを追加する。'''
         self._image_taker.run(
+            localtime=time.localtime(),
             save_image='i' in arg,
             save_detection='d' in arg
         )
-
-    def do_log(self, arg):
-        '''記録された識別結果の履歴を表示する。'''
 
     def do_showsettingdirs(self, arg):
         '''撮影した画像、検出情報の保存先ディレクトリを表示する。'''

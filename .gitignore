@@ -5,6 +5,12 @@
 test_data/
 default_image_save_dir/*
 
+# 識別情報
+default_detection_save_dir/*
+
+# 設定
+*.json
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
