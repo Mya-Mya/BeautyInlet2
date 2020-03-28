@@ -7,6 +7,7 @@ import os
 import time
 import glob
 
+IMG_HEIGHT,IMG_WIDTH=120,160
 
 class ImageDetector(object):
     def __init__(self,
@@ -19,7 +20,7 @@ class ImageDetector(object):
         print('ImageDetector : TensorFlow及び検出モデルの読み込み中。')
         import tensorflow as tf
         my_dir = os.path.dirname(__file__)
-        self._model = tf.keras.models.load_model(os.path.join(my_dir, "..", "modelF_for_1.4-00300.h5"))
+        self._model = tf.keras.models.load_model(os.path.join(my_dir, "..", "modelA-01500.h5"))
         print('ImageDetector : TensorFlow及び検出モデルの読み込み完了。')
 
     def detect(self, localtime: time.struct_time, image: np.ndarray, save_detection: bool):

@@ -1,8 +1,11 @@
 # AIモデル
 *.h5
 
+# お試しコード
+確認用/*
+
 # 写真
-test_data/
+Test/
 default_image_save_dir/*
 
 # 識別情報
