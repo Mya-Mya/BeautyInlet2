@@ -22,4 +22,4 @@ class ImageSaver(object):
         )
         fp = os.path.join(dir, fname)
         image_pil.save(fp)
-        print('ImageSaver.save_image : {}を保存した'.format(fp))
+        print('ImageSaver : I saved the image to {}'.format(fp))

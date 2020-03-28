@@ -17,7 +17,7 @@ class ImageTaker(object):
             save_detection: bool):
         video = cv2.VideoCapture(0)
         if not video.isOpened():
-            print('ImageTaker : カメラを開けなかった。')
+            print('ImageTaker : I couldn`t open the camera.')
             return
         ret, image = video.read()
         video.release()

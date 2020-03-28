@@ -17,7 +17,7 @@ class SettingManager(object):
             with io.open(self._setting_full_fname)as f:
                 self._setting = json.load(f)
         except:
-            print('SettingManager : {}が見つからなかったので新規作成するつもり。'.format(self._setting_full_fname))
+            print('SettingManager : {} was not found. I will create it on exit.'.format(self._setting_full_fname))
             pass
 
     def restore_default_setting(self):

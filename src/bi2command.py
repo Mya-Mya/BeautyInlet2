@@ -22,7 +22,7 @@ class BI2Command(cmd.Cmd):
         self._end_event = end_event
 
     def default(self, line):
-        print('不明なコマンド')
+        print('Unknown Command')
 
     def to_four_digit_time(self, h: int, m: int) -> str:
         return '{:02d}{:02d}'.format(h, m)
@@ -35,12 +35,12 @@ class BI2Command(cmd.Cmd):
     def do_showplans(self, arg):
         '''撮影計画の一覧を表示する。'''
         plan_list = self._setting_manager.get_taking_plans()
-        print('{}件の撮影計画'.format(len(plan_list)))
+        print('{} Plan(s)'.format(len(plan_list)))
         for plan in plan_list:
             time = self.to_four_digit_time(plan['h'], plan['m'])
             print(time, end=' ')
-            if plan['saveImage']: print('画像保存', end=' ')
-            if plan['saveDetection']: print('検出情報保存', end=' ')
+            if plan['saveImage']: print('save image', end=' ')
+            if plan['saveDetection']: print('save detection', end=' ')
             print('')
 
     def do_tidyplans(self, arg):
@@ -51,7 +51,7 @@ class BI2Command(cmd.Cmd):
         '''撮影計画を削除する。argには削除するものの動作時刻を4桁で示す。
         4:15の撮影計画を削除する際は arg="0415"'''
         if len(arg) is not 4:
-            print('arg には4文字入れて')
+            print('type 4 letters in arg.')
         h, m = self.to_hour_and_minuite(arg)
         self._setting_manager.delete_taking_plan(h, m)
 
@@ -60,7 +60,7 @@ class BI2Command(cmd.Cmd):
         15:0に保存と識別をする撮影計画を追加/上書きする際は arg="1500id"
         10:10に識別をする撮影計画を追加/上書きする際は arg="1010d"'''
         if len(arg) < 4:
-            print('arg には最低4文字入るはず')
+            print('type 4 or more letters in arg.')
         h, m = self.to_hour_and_minuite(arg[0:4])
         params = arg[4:len(arg)]
         save_image = ('i' in params)
@@ -81,9 +81,9 @@ class BI2Command(cmd.Cmd):
 
     def do_showsettingdirs(self, arg):
         '''撮影した画像、検出情報の保存先ディレクトリを表示する。'''
-        print('画像の保存先 : ', end='')
+        print('Images are saved to : ', end='')
         print(self._setting_manager.get_image_save_dir())
-        print('検出情報の保存先 : ', end='')
+        print('Detections are saved to : ', end='')
         print(self._setting_manager.get_detection_save_dir())
 
     def do_savingimgdir(self, arg):
@@ -97,13 +97,13 @@ class BI2Command(cmd.Cmd):
     def do_showexittime(self, arg):
         '''終了時刻を表示する。'''
         h, m = self._setting_manager.get_exit_time()
-        print('終了時刻は{:02d}時{:02d}分です。'.format(h, m))
+        print('I`ll exit on {:02d}:{:02d}.'.format(h, m))
 
     def do_exittime(self, arg):
         '''終了時刻を argに4桁で示す。
         2:0に終了する場合は arg="0200"'''
         if len(arg) is not 4:
-            print('arg には4文字入れて')
+            print('type 4 letters in arg.')
             return
         h, m = self.to_hour_and_minuite(arg)
         self._setting_manager.set_exit_time(h, m)
