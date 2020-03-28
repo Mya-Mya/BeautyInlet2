@@ -46,8 +46,8 @@ class ImageDetector(object):
         fname = '{}_{:02d}.csv'.format(localtime.tm_year, localtime.tm_mon)
         filepath = os.path.join(dir, fname)
         fieldnames = ['year', 'mon', 'day', 'hour', 'min', 'sec', 'detection']
-        exists = (glob.glob(filepath) is not [])
-        with open(filepath, 'a')as csvfile:
+        exists = (filepath in glob.glob(os.path.join(dir,'*')))
+        with open(filepath, 'a',newline='')as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             if not exists:
                 writer.writeheader()

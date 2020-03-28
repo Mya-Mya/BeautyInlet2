@@ -1,15 +1,12 @@
-# AIモデル
+﻿# AIモデル
 *.h5
 
-# お試しコード
+# お試しコード・ディレクトリ
+
 確認用/*
-
-# 写真
 Test/
-default_image_save_dir/*
-
-# 識別情報
-default_detection_save_dir/*
+default_image_save_dir/
+default_detection_save_dir/
 
 # 設定
 *.json
