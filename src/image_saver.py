@@ -12,7 +12,7 @@ class ImageSaver(object):
     def save_image(self,localtime:time.struct_time, image: np.ndarray):
         image_pil = Image.fromarray(image)
         dir = self._setting_manager.get_image_save_dir()
-        fname='{}_{}_{}_{}_{}_{}.jpg'.format(
+        fname='{}_{:02d}_{:02d}_{:02d}_{:02d}_{:02d}.jpg'.format(
             localtime.tm_year,
             localtime.tm_mon,
             localtime.tm_mday,
