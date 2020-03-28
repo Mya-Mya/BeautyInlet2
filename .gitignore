@@ -11,6 +11,9 @@ default_detection_save_dir/*
 # 設定
 *.json
 
+# PyCharmのファイル
+.idea/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
