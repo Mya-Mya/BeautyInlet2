@@ -1,10 +1,10 @@
 {
  "exitTime": {
-  "h": 12,
-  "m": 10
+  "h": 19,
+  "m": 0
  },
  "imageSaveDir": "/home/yuya/repositories/BeautyInlet2/src/../default_image_save_dir",
- "detectionSaveDir": "/home/yuya/repositories/BeautyInlet2/src/../default_seeninfo_save_dir",
+ "detectionSaveDir": "/home/yuya/repositories/BeautyInlet2/src/../default_detection_save_dir",
  "takingPlans": [
   {
    "h": 5,
@@ -17,66 +17,6 @@
    "m": 0,
    "saveImage": true,
    "saveDetection": true
-  },
-  {
-   "h": 7,
-   "m": 0,
-   "saveImage": true,
-   "saveDetection": true
-  },
-  {
-   "h": 8,
-   "m": 0,
-   "saveImage": false,
-   "saveDetection": true
-  },
-  {
-   "h": 9,
-   "m": 0,
-   "saveImage": true,
-   "saveDetection": true
-  },
-  {
-   "h": 11,
-   "m": 0,
-   "saveImage": true,
-   "saveDetection": false
-  },
-  {
-   "h": 11,
-   "m": 10,
-   "saveImage": true,
-   "saveDetection": false
-  },
-  {
-   "h": 11,
-   "m": 20,
-   "saveImage": true,
-   "saveDetection": false
-  },
-  {
-   "h": 11,
-   "m": 30,
-   "saveImage": true,
-   "saveDetection": false
-  },
-  {
-   "h": 11,
-   "m": 40,
-   "saveImage": true,
-   "saveDetection": false
-  },
-  {
-   "h": 11,
-   "m": 50,
-   "saveImage": true,
-   "saveDetection": false
-  },
-  {
-   "h": 12,
-   "m": 0,
-   "saveImage": true,
-   "saveDetection": false
   }
  ]
 }
