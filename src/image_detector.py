@@ -35,7 +35,7 @@ class ImageDetector(object):
         image_pil = image_pil.resize((IMG_WIDTH, IMG_HEIGHT))
         image = np.asarray(image_pil).reshape(1, IMG_HEIGHT, IMG_WIDTH, 3)
         image = image / 255.
-        predict_idx = self._model.predict(image)
+        predict_idx = np.argmax(self._model.predict(image)[0])
         predict_name = PREDICTIDX_TO_NAME[predict_idx]
         print('ImageDetector : 識別結果 - {}'.format(predict_name))
         if save_detection:
