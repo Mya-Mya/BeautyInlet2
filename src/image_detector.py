@@ -6,8 +6,11 @@ import threading
 import os
 import time
 import glob
+from PIL import Image
 
-IMG_HEIGHT,IMG_WIDTH=120,160
+IMG_HEIGHT, IMG_WIDTH = 120, 160
+PREDICTIDX_TO_NAME = {0: 'Idunno', 1: 'Notseen', 2: 'Seen'}
+
 
 class ImageDetector(object):
     def __init__(self,
@@ -25,11 +28,18 @@ class ImageDetector(object):
 
     def detect(self, localtime: time.struct_time, image: np.ndarray, save_detection: bool):
         if self._loader.is_alive():
-            print('ImageDetector.save_detection : 未だTensorFlow及び検出モデルの読み込み中。お待ちを。')
+            print('ImageDetector : 未だTensorFlow及び検出モデルの読み込み中。お待ちを。')
             self._loader.join()
-        print('Detector.detect')
+        print('ImageDetector : 識別を開始する。')
+        image_pil = Image.fromarray(image)
+        image_pil = image_pil.resize((IMG_WIDTH, IMG_HEIGHT))
+        image = np.asarray(image_pil).reshape(1, IMG_HEIGHT, IMG_WIDTH, 3)
+        image = image / 255.
+        predict_idx = self._model.predict(image)
+        predict_name = PREDICTIDX_TO_NAME[predict_idx]
+        print('ImageDetector : 識別結果 - {}'.format(predict_name))
         if save_detection:
-            self.save_detection(localtime=localtime,detection='未観測')
+            self.save_detection(localtime=localtime, detection=predict_name)
 
     def save_detection(self, localtime: time.struct_time, detection: str):
         dir = self._setting_manager.get_detection_save_dir()
