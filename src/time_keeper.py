@@ -31,7 +31,7 @@ class TimeKeeper(object):
             # 撮影計画のチェック
             for plan in self._setting_manager.get_taking_plans():
                 if plan['h'] is tm_hour and plan['m'] is tm_min:
-                    print('TimeKeeper : It`s time to take.')
+                    print('TimeKeeper : It`s time to take. {:02d}:{:02d}'.format(tm_hour, tm_min))
                     self._image_taker.run(
                         localtime=localtime,
                         save_image=plan['saveImage'],
