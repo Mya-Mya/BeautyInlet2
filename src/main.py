@@ -7,6 +7,9 @@ import sys
 import image_taker
 import image_saver
 import image_detector
+import os
+
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 end_event = threading.Event()
 
