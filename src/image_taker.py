@@ -20,10 +20,10 @@ class ImageTaker(object):
             print('ImageTaker : I couldn`t open the camera.')
             return
         ret, image = video.read()
+        video.release()
         if not ret:
             print('ImageTaker : I couldn`t get image from the camera.')
             return
-        video.release()
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
         if save_image:
