@@ -1,10 +1,14 @@
-from typing import List
+from typing import List, Optional
+from threading import Thread
 from PIL import Image
+from datetime import datetime
+
 from camera import Camera
 from classifier import Classifier, ClassifyResult, IMG_WIDTH, IMG_HEIGHT
 from detectionsaver import DetectionSaver
 from imagesaver import ImageSaver
 from datetime import datetime
+from takefirerer import TakeFierer
 
 
 class BI2DetectorApp():
@@ -12,12 +16,22 @@ class BI2DetectorApp():
                  classifier: Classifier,
                  camera: Camera,
                  detectionsavers: List[DetectionSaver],
-                 imagesavers: List[ImageSaver]
+                 imagesavers: List[ImageSaver],
+                 takefierers: List[TakeFierer]
                  ) -> None:
         self.classifier = classifier
         self.camera = camera
         self.detectionsavers = detectionsavers
         self.imagesavers = imagesavers
+        self.takefierers = takefierers
+
+        for takefierer in takefierers:
+            thread = Thread(
+                target=takefierer.run, 
+                args=[lambda:self.take_image()], 
+                daemon=True
+            )
+            thread.start()
 
     def justify_image(self, image: Image.Image) -> Image.Image:
         image = image.convert("RGB")
@@ -33,13 +47,15 @@ class BI2DetectorApp():
 
     def take_image(self,
                    save_image: bool = True,
-                   save_detection: bool = True
+                   save_detection: bool = True,
+                   date:Optional[datetime]=None
                    ):
         if (not save_image) and (not save_detection):
             return
         image = self.camera.take()
         image = self.justify_image(image)
-        date_iso = datetime.now().isoformat()
+        date = date or datetime.now()
+        date_iso = date.isoformat()
         if save_image:
             for imagesaver in self.imagesavers:
                 imagesaver.save(date_iso, image)
