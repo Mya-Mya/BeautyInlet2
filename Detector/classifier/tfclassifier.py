@@ -53,10 +53,10 @@ class TFClassifier():
         label_s = tensorflow.argmax(output, axis=1).numpy()
         for label, scores in zip(label_s, output.numpy()):
             classifyresult = ClassifyResult(
-                label=label,
-                unclear_score=scores[0],
-                notseen_score=scores[1],
-                seen_score=scores[2]
+                label=int(label),
+                unclear_score=float(scores[0]),
+                notseen_score=float(scores[1]),
+                seen_score=float(scores[2])
             )
             classifyresult_s.append(classifyresult)
         return classifyresult_s
