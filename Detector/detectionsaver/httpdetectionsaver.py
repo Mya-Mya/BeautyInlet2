@@ -9,9 +9,9 @@ class HttpDetectionSaver(DetectionSaver):
     def __init__(self) -> None:
         super().__init__()
         self.service_url = (
-            Path(__file__).parent/".."/"Environments" /
+            Path(__file__).parent/".."/".."/"Environments" /
             "detectiondbservice_url.txt"
-        ).read_text
+        ).read_text()
 
     def save(self, date_iso: str, result: ClassifyResult):
         requests.post(
