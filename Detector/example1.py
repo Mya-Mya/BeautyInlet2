@@ -11,7 +11,7 @@ from imagesaver import PreviewImageServer
 from pathlib import Path
 
 print("Launching TFClassifier", datetime.now())
-classifier = TFClassifier(Path(__file__).parent/"models"/"B-00500.h5")
+classifier = TFClassifier(Path(__file__).parent/".."/"Models"/"B-00500.h5")
 print("Launcing WebCamera", datetime.now())
 camera = WebCamera()
 print("Launcing Detection Savers", datetime.now())

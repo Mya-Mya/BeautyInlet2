@@ -1,5 +1,5 @@
 .DS_Store
 .idea/
 Detector/tests
-Detector/models
+Models/
 Environments/
