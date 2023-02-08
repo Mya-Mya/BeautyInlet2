@@ -1,0 +1,283 @@
+<html lang="ja">
+<style>
+    .detection-table {
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+    }
+
+    .detection {
+        height: 32px;
+        display: flex;
+        gap: 8px;
+        align-items: center;
+    }
+
+    .status {
+        width: 16px;
+        height: 100%;
+    }
+
+    .status-unclear {
+        background-color: rgb(201, 201, 201);
+    }
+
+    .status-notseen {
+        background-color: rgb(253, 195, 145);
+    }
+
+    .status-seen {
+        background-color: rgb(129, 194, 0);
+    }
+
+    .time {
+        margin: 0;
+    }
+</style>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@1.*/css/pico.min.css">
+    <title>BeautyInlet2 Monitor</title>
+</head>
+
+<body>
+    <main class="container">
+        <div>
+            <input type="date" id="date" min="2021-01-01" onchange="onDateChange();">
+        </div>
+        <div>
+            <div class="detection-table" id="detection-table">
+
+            </div>
+            <div style="text-align: center;">
+                <p id="detection-table-message"></p>
+            </div>
+        </div>
+
+
+    </main>
+    <footer style="margin-top: 80px;text-align: center;">
+        <hr>
+        <div style="display: flex;gap: 48px;justify-content: center;">
+            <div class="detection">
+                <div class="status status-seen"></div>
+                <p class="time">SEEN</p>
+            </div>
+            <div class="detection">
+                <div class="status status-notseen"></div>
+                <p class="time">NOTSEEN</p>
+            </div>
+            <div class="detection">
+                <div class="status status-unclear"></div>
+                <p class="time">UNCLEAR</p>
+            </div>
+        </div>
+        <hr>
+        <p>
+            <small>
+                BeautyInlet2 Monitor<br>
+                Developed with <span onclick="onHeartPress();" id="heart">❤️</span> by Mya-Mya
+            </small>
+        </p>
+        <p>
+            <small>
+                <a href="https://picocss.com/">Pico.css</a><br>
+                <a href="https://github.com/Mya-Mya/BeautyInlet2">GitHub</a>
+            </small>
+        </p>
+    </footer>
+</body>
+
+</html>
+<script>
+    //-------- Constants & Types --------//
+
+    const UNCLEAR = 0;
+    const NOTSEEN = 1;
+    const SEEN = 2;
+
+    /**
+     * @typedef {object} Detection
+     * @property {string} dateISOString
+     * @property {number} statusLabel
+     */
+
+
+    //-------- Utilities --------//
+
+    /**
+     * @param {Date} date
+     */
+
+    const toLocalISOString = (date) => {
+        const pad2 = (x) => ('0' + x).slice(-2);
+        const year = (date.getFullYear()).toString();
+        const month = pad2((date.getMonth() + 1).toString());
+        const day = pad2(date.getDate().toString());
+        const hour = pad2(date.getHours().toString());
+        const min = pad2(date.getMinutes().toString());
+        const sec = pad2(date.getSeconds().toString());
+        return `${year}-${month}-${day}T${hour}:${min}:${sec}`;
+    }
+
+    //-------- View Utilities --------//
+
+    /**
+     * @param {string} dateISOString
+     * @returns {string}
+     */
+    const convertDateToSimpleTime = (dateISOString) => dateISOString.substring(11, 16)
+
+    /**
+     * @param {number} statusLabel
+     * @returns {string}
+     */
+    const convertStatusLabelToStatusClass = (statusLabel) => {
+        return {
+            [SEEN]: "status-seen",
+            [NOTSEEN]: "status-notseen",
+            [UNCLEAR]: "status-unclear"
+        }[statusLabel]
+    }
+
+
+    /**
+     * @param {Detection[]} detections
+     */
+    const updateDetectionsTable = (detections) => {
+        const $table = document.getElementById("detection-table")
+        while ($table.children.length > 0) {
+            $table.removeChild(
+                $table.children.item(0)
+            )
+        }
+        detections.forEach(({ dateISOString, statusLabel }) => {
+            const $detection = document.createElement("div")
+            $detection.classList.add("detection")
+            const $status = document.createElement("div")
+            $status.classList.add("status")
+            $status.classList.add(convertStatusLabelToStatusClass(statusLabel))
+            const $time = document.createElement("p")
+            $time.classList.add("time")
+            $time.innerText = convertDateToSimpleTime(dateISOString)
+            $detection.append($status, $time)
+            $table.append($detection)
+        })
+
+
+        $message = document.getElementById("detection-table-message")
+        if (detections.length == 0) {
+            $message.innerText = "この日の判別情報はありません"
+            return
+        } else {
+            $message.innerText = ""
+        }
+
+        console.log("updateDetectionsTable")
+        console.table(detections)
+    }
+    const showLoadingDetections = () => {
+        $message = document.getElementById("detection-table-message")
+        $message.innerText = "読み込み中"
+    }
+
+    //-------- Memes --------//
+
+    const wait = async (t) => new Promise(resolve => setTimeout(resolve, t))
+    const onHeartPress = async () => {
+        alert("Chu!")// (> <)
+        const $heart = document.getElementById("heart")
+        const texts = ["💙", "❤️", "💚", "💛", "💜"]
+        let i = 0
+        while (true) {
+            await wait(100)
+            $heart.innerText = texts[i]
+            i = (i + 1) % texts.length
+        }
+    }
+
+    //-------- Applications --------//
+
+    class DetectionCollector {
+        /**
+         * @param {Date} date
+         * @returns {Promise<Detection[]>}
+         */
+        async getByDate(date) { }
+    }
+    class DummyDetectionCollector extends DetectionCollector {
+        async getByDate(date) {
+            const detections0 = []
+            const detections1 = [
+                {
+                    dateISOString: "2023-02-01T00:00:00",
+                    statusLabel: UNCLEAR,
+                },
+                {
+                    dateISOString: "2023-02-01T01:00:00",
+                    statusLabel: UNCLEAR,
+                },
+                {
+                    dateISOString: "2023-02-01T02:00:00",
+                    statusLabel: NOTSEEN,
+                },
+                {
+                    dateISOString: "2023-02-01T03:00:00",
+                    statusLabel: NOTSEEN,
+                },
+                {
+                    dateISOString: "2023-02-01T04:00:00",
+                    statusLabel: SEEN,
+                },
+                {
+                    dateISOString: "2023-02-01T07:00:00",
+                    statusLabel: NOTSEEN,
+                },
+                {
+                    dateISOString: "2023-02-01T08:00:00",
+                    statusLabel: NOTSEEN,
+                },
+            ]
+            const detections = Math.random() < 0.4 ? detections0 : detections1
+            return new Promise(async (resolve) => {
+                await wait(300)
+                resolve(detections)
+            })
+        }
+    }
+    class GASDetectionCollector extends DetectionCollector {
+        async getByDate(date) {
+            const dateISOString = date.toISOString()
+
+            return new Promise(resolve => {
+                google.script.run.withSuccessHandler(
+                    res => {
+                        let data = JSON.parse(res)
+                        resolve(data)
+                    })
+                    .withFailureHandler(error => alert(JSON.stringify(error)))
+                    .getDetectionsByDate(dateISOString);// Call function in the GAS script.
+            })
+        }
+    }
+    //-------- Controllers & Logics --------//
+
+    /** @type{DetectionCollector} */
+    const mDetectionCollector = new DummyDetectionCollector() //TODO:REPLACE WITH GASDetectionCollector IN THE PRODUCTION
+    const onDateChange = async () => {
+        const date = new Date($date.value)
+        updateDetectionsTable([])
+        showLoadingDetections()
+        const detections = await mDetectionCollector.getByDate(date)
+        updateDetectionsTable(detections)
+    }
+
+    //-------- Startups --------//
+    const $date = document.getElementById("date")
+    $date.setAttribute("value", toLocalISOString(new Date()).substr(0, 10))
+    onDateChange()
+
+</script>
